@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechEdu - Plano de Software</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">TechEdu</a>
+        <div class="user-profile">
+            <a href="#">👤</a>
+        </div>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">&larr; Voltar para planos</a>
+
+        <section class="plan-header">
+            <img src="https://i.imgur.com/j4oGq8M.png" alt="Abstração de Software">
+            <div class="header-text">
+                <h1>Informações do seu plano de Software:</h1>
+                <p>Ótima escolha! Agora personalize seu plano de uso de software.</p>
+            </div>
+        </section>
+
+        <section class="plan-form">
+            <form action="#" method="POST">
+                
+                <div class="form-group">
+                    <label for="plan-name">Nome do plano</label>
+                    <input type="text" id="plan-name" name="plan_name" value="Trilha de Aprendizado em Software">
+                </div>
+
+                <div class="form-group">
+                    <label for="knowledge-level">Meu Nível de Conhecimento</label>
+                    <select id="knowledge-level" name="knowledge_level">
+                        <option value="iniciante">Iniciante (Quase não sei usar)</option>
+                        <option value="intermediario">Intermediário (Uso o básico)</option>
+                        <option value="avancado">Avançado (Domino as ferramentas)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="main-goal">Meu Objetivo Principal</label>
+                    <select id="main-goal" name="main_goal">
+                        <option value="windows">Dominar o Windows</option>
+                        <option value="linux">Aprender a usar o Linux</option>
+                        <option value="office">Especialista em Pacote Office</option>
+                        <option value="produtividade">Organização e Produtividade</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="plan-description">Descrição</label>
+                    <textarea id="plan-description" name="plan_description" placeholder="Escreva um breve resumo do que você espera deste plano...">Quero aprender a usar melhor o computador no dia-a-dia, principalmente ferramentas de escritório e o sistema operacional.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Tópicos de Foco</label>
+                    <div class="topics-group">
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic1" name="topic" value="so" checked>
+                            <label for="topic1">Sistemas Operacionais (Windows/Linux)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic2" name="topic" value="word" checked>
+                            <label for="topic2">Editores de Texto (Word, Google Docs)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic3" name="topic" value="excel" checked>
+                            <label for="topic3">Planilhas (Excel, Google Sheets)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic4" name="topic" value="powerpoint">
+                            <label for="topic4">Apresentações (PowerPoint)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic5" name="topic" value="email">
+                            <label for="topic5">Ferramentas de Comunicação (Email, Teams)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic6" name="topic" value="seguranca">
+                            <label for="topic6">Segurança e Antivírus</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-toggle">
+                    <span>Tornar este plano público?</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="submit-button">Gerar meu Plano de Estudos</button>
+            </form>
+
+            </section>
+    </main>
+
+    <script>
+        // Esta lógica é idêntica à do plano-hardware.html
+        // A única diferença é a função de simulação abaixo.
+        
+        const planForm = document.querySelector('.plan-form form');
+        const submitButton = document.querySelector('.submit-button');
+
+        planForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(planForm);
+            
+            const data = {
+                topics: []
+            };
+            formData.forEach((value, key) => {
+                if (key === 'topic') {
+                    data.topics.push(value);
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            submitButton.textContent = 'Gerando seu plano...';
+            submitButton.disabled = true;
+
+            try {
+                const simulatedResponse = await generateSimulatedPlan(data);
+                const oldResult = document.querySelector('.plan-result');
+                if(oldResult) oldResult.remove();
+
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'plan-result';
+                resultDiv.innerHTML = simulatedResponse;
+                planForm.after(resultDiv);
+
+                activateProgressBar();
+                submitButton.textContent = 'Plano Gerado com Sucesso!';
+            } catch (error) {
+                submitButton.textContent = 'Erro ao gerar. Tente novamente.';
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        function activateProgressBar() {
+            const allTasks = document.querySelectorAll('.task-checkbox');
+            const progressBarFill = document.querySelector('.progress-bar-fill');
+            const progressText = document.querySelector('.progress-text');
+            const totalTasks = allTasks.length;
+
+            if (totalTasks === 0) return;
+
+            function updateProgress() {
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                const percentage = (checkedTasks / totalTasks) * 100;
+                
+                progressBarFill.style.width = `${percentage}%`;
+                progressText.textContent = `Progresso: ${Math.round(percentage)}% (${checkedTasks} de ${totalTasks} tarefas)`;
+            }
+
+            allTasks.forEach(task => {
+                task.addEventListener('change', updateProgress);
+            });
+            updateProgress();
+        }
+
+        /**
+         * FUNÇÃO DE SIMULAÇÃO (API de IA) - Versão Software
+         */
+        async function generateSimulatedPlan(data) {
+            console.log("Dados enviados para a IA:", data);
+            await new Promise(resolve => setTimeout(resolve, 1500)); 
+
+            let planHtml = `
+                <h2>Seu Plano de Software (Nível: ${data.knowledge_level})</h2>
+                <p><strong>Objetivo:</strong> ${data.main_goal}</p>
+
+                <div class="progress-section">
+                    <div class="progress-text">Progresso: 0% (0 de X tarefas)</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                </div>
+
+                <div class="plan-modules">
+            `;
+
+            // Módulo 1: Fixo
+            planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo 1: Fundamentos de Software</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task-sw-1-1" class="task-checkbox">
+                            <label for="task-sw-1-1">O que é um Sistema Operacional?</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task-sw-1-2" class="task-checkbox">
+                            <label for="task-sw-1-2">Instalando e Desinstalando Programas</label>
+                        </li>
+                    </ul>
+                </div>
+            `;
+
+            // Módulos Condicionais
+            if (data.topics.includes('excel')) {
+                planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo 2: Foco em Planilhas (Excel)</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task-excel-1" class="task-checkbox">
+                            <label for="task-excel-1">O que são Células, Linhas e Colunas</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task-excel-2" class="task-checkbox">
+                            <label for="task-excel-2">Criando sua primeira fórmula (SOMA)</label>
+                        </li>
+                    </ul>
+                </div>
+                `;
+            }
+
+            if (data.topics.includes('seguranca')) {
+                planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo 3: Segurança Digital</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task-sec-1" class="task-checkbox">
+                            <label for="task-sec-1">O que é um Vírus e Phishing?</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task-sec-2" class="task-checkbox">
+                            <label for="task-sec-2">Instalando um Antivírus</label>
+                        </li>
+                    </ul>
+                </div>
+                `;
+            }
+            
+            planHtml += `</div>`;
+            return planHtml;
+        }
+    </script>
+</body>
+</html>

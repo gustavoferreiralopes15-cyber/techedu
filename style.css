@@ -1,0 +1,464 @@
+/* --- Reset e Configurações Globais --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* --- Cabeçalho --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a;
+    color: white;
+    padding: 1rem 5%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: white;
+}
+
+.user-profile a {
+    font-size: 1.6rem; 
+    text-decoration: none;
+    color: white;
+}
+
+/* --- Conteúdo Principal ---- */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    padding-bottom: 4rem; /* Mais espaço no final */
+}
+
+/* =================================== */
+/* ESTILOS DA PÁGINA 'index.html'      */
+/* =================================== */
+
+.title-section {
+    text-align: center;
+    padding: 2.5rem 1rem;
+}
+
+.title-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.title-section .subtitle {
+    font-size: 1rem;
+    color: #666;
+    max-width: 450px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.title-section h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.plans-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.plan-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.plan-card img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card-content p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+/* =================================== */
+/* ESTILOS DAS PÁGINAS DE PLANO        */
+/* =================================== */
+
+.back-link {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #000;
+}
+
+.plan-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.plan-header img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.plan-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.plan-header p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.plan-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.plan-form label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.plan-form input[type="text"],
+.plan-form select,
+.plan-form textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.plan-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.form-group-toggle span {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #6a2c91;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.topics-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.topic-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.topic-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #6a2c91;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #6a2c91;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 2rem;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #532172;
+    transform: scale(1.01);
+}
+
+.submit-button:disabled {
+    background-color: #9e8eac;
+    cursor: not-allowed;
+}
+
+
+/* =================================== */
+/* NOVOS ESTILOS DO PLANO GERADO (JS)  */
+/* =================================== */
+
+.plan-result {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.plan-result h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #6a2c91; /* Cor roxa/púrpura */
+}
+
+.plan-result p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+/* --- Barra de Progresso --- */
+.progress-section {
+    margin-bottom: 2rem;
+}
+
+.progress-text {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden; /* Garante que a barra interna não transborde */
+}
+
+.progress-bar-fill {
+    width: 0%; /* Começa em 0% */
+    height: 100%;
+    background-color: #6a2c91;
+    border-radius: 10px;
+    transition: width 0.4s ease; /* Animação suave */
+}
+
+/* --- Módulos de Estudo --- */
+.plan-modules {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.module {
+    background-color: #fdfdfd;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.module-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.task-list {
+    list-style-type: none;
+    padding: 1rem 1.5rem;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.task-item label {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.task-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #6a2c91;
+    cursor: pointer;
+}
+
+/* Quando o item for marcado */
+.task-item input:checked + label {
+    text-decoration: line-through;
+    color: #999;
+}
+
+
+/* =================================== */
+/* RESPONSIVIDADE (Para Celular)       */
+/* =================================== */
+@media (max-width: 768px) {
+    /* Página 'index.html' */
+    .plan-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .plan-card img {
+        width: 100%;
+        height: 150px;
+    }
+
+    .title-section h1 {
+        font-size: 2rem;
+    }
+
+    .title-section h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Páginas de Plano */
+    .plan-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .plan-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .plan-header p {
+        font-size: 1rem;
+    }
+
+    .topics-group {
+        grid-template-columns: 1fr; /* Uma coluna no celular */
+    }
+
+    .plan-result {
+        padding: 1rem;
+    }
+
+    .module-header {
+        font-size: 1.1rem;
+    }
+}

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechEdu - Plano de Hardware</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">TechEdu</a>
+        <div class="user-profile">
+            <a href="#">👤</a>
+        </div>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">&larr; Voltar para planos</a>
+
+        <section class="plan-header">
+            <img src="https://i.imgur.com/8QpA0gR.png" alt="Placa de Hardware">
+            <div class="header-text">
+                <h1>Informações do seu plano de Hardware:</h1>
+                <p>Ótima escolha! Agora personalize as informações do seu plano.</p>
+            </div>
+        </section>
+
+        <section class="plan-form">
+            <form action="#" method="POST">
+                
+                <div class="form-group">
+                    <label for="plan-name">Nome do plano</label>
+                    <input type="text" id="plan-name" name="plan_name" value="Trilha de Aprendizado em Hardware">
+                </div>
+
+                <div class="form-group">
+                    <label for="knowledge-level">Meu Nível de Conhecimento</label>
+                    <select id="knowledge-level" name="knowledge_level">
+                        <option value="iniciante">Iniciante (Começando do zero)</option>
+                        <option value="intermediario">Intermediário (Já tenho algum conhecimento)</option>
+                        <option value="avancado">Avançado (Já sou um especialista)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="main-goal">Meu Objetivo Principal</label>
+                    <select id="main-goal" name="main_goal">
+                        <option value="montar">Montar meu primeiro PC</option>
+                        <option value="manutencao">Fazer manutenção básica</option>
+                        <option value="componentes">Entender o funcionamento dos componentes</option>
+                        <option value="tecnico">Tornar-me um técnico de hardware</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="plan-description">Descrição</label>
+                    <textarea id="plan-description" name="plan_description" placeholder="Escreva um breve resumo do que você espera deste plano...">Eu preciso de um plano de estudos de hardware. Quero algo simples, que me ajude a entender os conceitos básicos e a montar um computador.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Tópicos de Foco</label>
+                    <div class="topics-group">
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic1" name="topic" value="cpu" checked>
+                            <label for="topic1">Processadores (CPUs)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic2" name="topic" value="motherboard" checked>
+                            <label for="topic2">Placas-Mãe</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic3" name="topic" value="ram">
+                            <label for="topic3">Memória RAM</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic4" name="topic" value="gpu">
+                            <label for="topic4">Placas de Vídeo (GPUs)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic5" name="topic" value="storage" checked>
+                            <label for="topic5">Armazenamento (SSD/HDD)</label>
+                        </div>
+                        <div class="topic-item">
+                            <input type="checkbox" id="topic6" name="topic" value="psu">
+                            <label for="topic6">Fontes de Alimentação (PSUs)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-toggle">
+                    <span>Tornar este plano público?</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="submit-button">Gerar meu Plano de Estudos</button>
+            </form>
+            
+            </section>
+    </main>
+
+    <script>
+        const planForm = document.querySelector('.plan-form form');
+        const submitButton = document.querySelector('.submit-button');
+
+        planForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(planForm);
+            
+            const data = {
+                topics: [] // Garante que 'topics' seja sempre uma lista
+            };
+            formData.forEach((value, key) => {
+                if (key === 'topic') {
+                    data.topics.push(value);
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            submitButton.textContent = 'Gerando seu plano...';
+            submitButton.disabled = true;
+
+            try {
+                // 1. Simula a chamada da API
+                const simulatedResponse = await generateSimulatedPlan(data);
+                
+                // 2. Remove o plano antigo, se existir
+                const oldResult = document.querySelector('.plan-result');
+                if(oldResult) oldResult.remove();
+
+                // 3. Cria a nova div e insere o HTML gerado
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'plan-result';
+                resultDiv.innerHTML = simulatedResponse;
+                planForm.after(resultDiv);
+
+                // 4. ATIVA a barra de progresso
+                activateProgressBar();
+
+                submitButton.textContent = 'Plano Gerado com Sucesso!';
+
+            } catch (error) {
+                console.error("Erro na geração: ", error);
+                submitButton.textContent = 'Erro ao gerar. Tente novamente.';
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        /**
+         * Adiciona os "escutadores" de evento aos checkboxes
+         * para atualizar a barra de progresso.
+         */
+        function activateProgressBar() {
+            const allTasks = document.querySelectorAll('.task-checkbox');
+            const progressBarFill = document.querySelector('.progress-bar-fill');
+            const progressText = document.querySelector('.progress-text');
+            const totalTasks = allTasks.length;
+
+            if (totalTasks === 0) return; // Não faz nada se não houver tarefas
+
+            // Função para calcular e atualizar a barra
+            function updateProgress() {
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                const percentage = (checkedTasks / totalTasks) * 100;
+                
+                progressBarFill.style.width = `${percentage}%`;
+                progressText.textContent = `Progresso: ${Math.round(percentage)}% (${checkedTasks} de ${totalTasks} tarefas)`;
+            }
+
+            // Adiciona o "escutador" a cada checkbox
+            allTasks.forEach(task => {
+                task.addEventListener('change', updateProgress);
+            });
+
+            // Atualiza a barra pela primeira vez (para mostrar 0%)
+            updateProgress();
+        }
+
+        /**
+         * FUNÇÃO DE SIMULAÇÃO (API de IA)
+         * Gera o novo HTML com módulos e checkboxes.
+         */
+        async function generateSimulatedPlan(data) {
+            console.log("Dados enviados para a IA:", data);
+            await new Promise(resolve => setTimeout(resolve, 1500)); 
+
+            let planHtml = `
+                <h2>Seu Plano de Hardware (Nível: ${data.knowledge_level})</h2>
+                <p><strong>Objetivo:</strong> ${data.main_goal}</p>
+
+                <div class="progress-section">
+                    <div class="progress-text">Progresso: 0% (0 de X tarefas)</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                </div>
+
+                <div class="plan-modules">
+            `;
+
+            // Módulo 1: Fixo
+            planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo 1: Conceitos Fundamentais</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task1-1" class="task-checkbox">
+                            <label for="task1-1">O que é Hardware e Software?</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task1-2" class="task-checkbox">
+                            <label for="task1-2">Tipos de Gabinetes e Funções</label>
+                        </li>
+                    </ul>
+                </div>
+            `;
+
+            // Módulos Condicionais (baseados nos checkboxes)
+            if (data.topics.includes('cpu')) {
+                planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo 2: Processadores (CPU)</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task-cpu-1" class="task-checkbox">
+                            <label for="task-cpu-1">Intel vs AMD: Prós e Contras</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task-cpu-2" class="task-checkbox">
+                            <label for="task-cpu-2">Instalação e Pasta Térmica</label>
+                        </li>
+                    </ul>
+                </div>
+                `;
+            }
+
+            if (data.topics.includes('motherboard')) {
+                planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo 3: Placa-Mãe</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task-mobo-1" class="task-checkbox">
+                            <label for="task-mobo-1">Formatos (ATX, Micro-ATX, ITX)</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task-mobo-2" class="task-checkbox">
+                            <label for="task-mobo-2">Conectores do Painel Frontal</label>
+                        </li>
+                    </ul>
+                </div>
+                `;
+            }
+            
+            // Módulo Final: Fixo
+            planHtml += `
+                <div class="module">
+                    <div class="module-header">Módulo Final: Montagem</div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="task-final-1" class="task-checkbox">
+                            <label for="task-final-1">Montagem passo a passo do PC</label>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="task-final-2" class="task-checkbox">
+                            <label for="task-final-2">Primeiro Boot e Configuração da BIOS</label>
+                        </li>
+                    </ul>
+                </div>
+            `;
+
+            planHtml += `</div>`; // Fecha .plan-modules
+            return planHtml;
+        }
+    </script>
+</body>
+</html>
